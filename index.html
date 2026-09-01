@@ -615,6 +615,126 @@
             color: white;
             border-color: var(--primary);
         }
+
+        /* Modal Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .modal-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-message {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-tertiary);
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .modal-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .modal-btn-secondary {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+
+        .modal-btn-secondary:hover {
+            background: var(--border-dark);
+        }
     </style>
 </head>
 <body>
@@ -661,12 +781,26 @@
                         <div class="category-tabs" id="categoryTabs"></div>
 
                         <div style="margin-top: 16px;">
-                            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Select a subcategory or write your own:</p>
+                            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Select a subcategory or customize below:</p>
                             <div class="trending-grid" id="subcategoryGrid"></div>
                         </div>
 
-                        <p style="font-size: 12px; color: var(--text-tertiary); margin-top: 16px; margin-bottom: 12px;">Custom topic:</p>
-                        <textarea id="topic" placeholder="Enter your custom topic or idea..."></textarea>
+                        <div style="margin-top: 20px; padding: 12px; background: rgba(124, 58, 237, 0.05); border: 1px solid var(--border); border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <p style="font-size: 12px; font-weight: 600; color: var(--text-primary);">Trending Now</p>
+                                <button class="btn-secondary" id="loadTrendingBtn" style="padding: 6px 12px; font-size: 11px;">Load</button>
+                            </div>
+                            <div id="trendingNowContainer" style="display: none;">
+                                <div id="trendingNowGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;"></div>
+                            </div>
+                            <div id="trendingNowEmpty" style="text-align: center; padding: 12px; color: var(--text-tertiary); font-size: 12px;">
+                                Click "Load" to see trending topics
+                            </div>
+                        </div>
+
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 16px; margin-bottom: 8px;"><strong>Topic & Instructions</strong></p>
+                        <p style="font-size: 11px; color: var(--text-tertiary); margin-bottom: 12px;">Edit the suggested prompt or write your own. Be specific about what you want to share for better results.</p>
+                        <textarea id="topic" placeholder="Edit the suggested prompt to match your specific idea..."></textarea>
                     </div>
 
                     <div class="form-group">
@@ -803,6 +937,26 @@
                     { text: 'Performance Optimization', prompt: 'Discuss performance optimization techniques you\'ve implemented. Share metrics, methodology, challenges encountered, and measurable improvements achieved.' },
                     { text: 'Security Best Practices', prompt: 'Share important security considerations and best practices in development. Discuss common vulnerabilities, how to prevent them, and why security matters in your domain.' }
                 ]
+            },
+            'AI & Machine Learning': {
+                subcategories: [
+                    { text: 'Latest AI Trends', prompt: 'Discuss cutting-edge AI developments and breakthroughs. Share what excites you about recent advancements, potential impact, and where the industry is heading. Make it accessible and forward-thinking.' },
+                    { text: 'AI Integration Guide', prompt: 'Share how to integrate AI tools into existing projects or workflows. Provide practical steps, use cases, tools you recommend, and measurable benefits. Make it actionable for professionals.' },
+                    { text: 'Prompt Engineering Tips', prompt: 'Share effective prompt engineering techniques for working with LLMs. Discuss strategies that improve output quality, common mistakes to avoid, and real examples that worked for you.' },
+                    { text: 'ML Implementation', prompt: 'Discuss implementing machine learning solutions in production. Cover challenges, best practices, tools, performance metrics, and lessons learned from your experience.' },
+                    { text: 'AI Tools & Platforms', prompt: 'Review AI tools, platforms, or APIs you\'ve used. Discuss features, pricing, use cases, pros and cons, and recommendations for different scenarios or skill levels.' },
+                    { text: 'AI Use Cases', prompt: 'Share real-world applications of AI in your industry or work. Discuss the problem solved, implementation approach, results achieved, and potential for others to replicate.' },
+                    { text: 'AI Ethics & Responsibility', prompt: 'Discuss ethical considerations in AI development and deployment. Share your perspective on bias, transparency, privacy, and responsible AI practices.' },
+                    { text: 'Learning AI/ML', prompt: 'Share resources, courses, or strategies for learning AI and machine learning. Discuss your learning journey, what worked, recommended tools, and advice for beginners.' }
+                ]
+            },
+            'Productivity & Automation': {
+                subcategories: [
+                    { text: 'Workflow Automation', prompt: 'Share how you automated routine tasks or workflows. Discuss the tools/technology used, time saved, implementation challenges, and tips for others to automate similar processes.' },
+                    { text: 'Tool Productivity Stack', prompt: 'Share your personal productivity tools and workflow stack. Explain why you chose each tool, how they work together, and the productivity gains you\'ve seen.' },
+                    { text: 'Time Management Strategy', prompt: 'Discuss an effective time management or productivity strategy you use. Explain the methodology, how you implemented it, results you\'ve seen, and challenges overcome.' },
+                    { text: 'Remote Work Tips', prompt: 'Share practical tips for being productive while working remotely. Discuss workspace setup, communication, focus strategies, and work-life boundaries that work for you.' }
+                ]
             }
         };
 
@@ -859,6 +1013,98 @@
         topicInput.addEventListener('input', () => {
             document.querySelectorAll('.trending-tag').forEach(tag => tag.classList.remove('selected'));
         });
+
+        // Load Trending Topics
+        document.getElementById('loadTrendingBtn').addEventListener('click', loadTrendingTopics);
+
+        async function loadTrendingTopics() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+
+            if (!apiKey) {
+                showMessage('Please enter your API key to load trending topics', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('loadTrendingBtn');
+            const container = document.getElementById('trendingNowContainer');
+            const empty = document.getElementById('trendingNowEmpty');
+
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+
+            try {
+                const trendingPrompt = `Generate 6 current trending topics for LinkedIn. Return ONLY JSON array:
+[{"title": "topic", "description": "1 line"}]`;
+
+                const response = await generateWithGemini(apiKey, trendingPrompt);
+                const jsonMatch = response.match(/\[[\s\S]*\]/);
+                if (!jsonMatch) throw new Error('Invalid format');
+
+                const trendingData = JSON.parse(jsonMatch[0]);
+                if (!Array.isArray(trendingData) || trendingData.length === 0) throw new Error('No topics');
+
+                displayTrendingTopics(trendingData);
+                empty.style.display = 'none';
+                container.style.display = 'block';
+                btn.textContent = 'Refresh';
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage(`Could not load: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function displayTrendingTopics(topics) {
+            const grid = document.getElementById('trendingNowGrid');
+            grid.innerHTML = '';
+
+            topics.slice(0, 4).forEach((topic) => {
+                const card = document.createElement('div');
+                card.style.cssText = `
+                    padding: 10px;
+                    background: var(--bg-light);
+                    border: 1px solid var(--border);
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 12px;
+                    text-align: center;
+                    transition: all 0.2s;
+                    min-height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 500;
+                `;
+                card.textContent = topic.title;
+                card.title = topic.description;
+
+                card.addEventListener('click', () => {
+                    document.getElementById('topic').value = topic.title;
+                    grid.querySelectorAll('div').forEach(c => {
+                        c.style.background = 'var(--bg-light)';
+                        c.style.color = 'var(--text-primary)';
+                        c.style.borderColor = 'var(--border)';
+                    });
+                    card.style.background = 'var(--primary)';
+                    card.style.color = 'white';
+                    card.style.borderColor = 'var(--primary)';
+                });
+
+                card.addEventListener('mouseenter', () => {
+                    if (card.style.background === 'var(--bg-light)') {
+                        card.style.borderColor = 'var(--primary)';
+                    }
+                });
+                card.addEventListener('mouseleave', () => {
+                    if (card.style.background === 'var(--bg-light)') {
+                        card.style.borderColor = 'var(--border)';
+                    }
+                });
+
+                grid.appendChild(card);
+            });
+        }
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', initCategories);
@@ -1029,21 +1275,36 @@ Return ONLY the post text, nothing else. No markdown, no quotes.`;
         }
 
         function showMessage(message, type) {
-            const previewContainer = document.getElementById('previewContainer');
-            let statusEl = previewContainer.querySelector('.status-message');
+            const modal = document.getElementById('messageModal');
+            const icon = document.getElementById('modalIcon');
+            const title = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
 
-            if (!statusEl) {
-                statusEl = document.createElement('div');
-                statusEl.className = 'status-message';
-                previewContainer.parentElement.insertBefore(statusEl, previewContainer);
+            // Set icon and title based on type
+            if (type === 'error') {
+                icon.textContent = '❌';
+                title.textContent = 'Error';
+            } else if (type === 'success') {
+                icon.textContent = '✓';
+                title.textContent = 'Success';
+            } else {
+                icon.textContent = 'ℹ️';
+                title.textContent = 'Message';
             }
 
-            statusEl.textContent = message;
-            statusEl.className = `status-message show ${type}`;
+            messageEl.textContent = message;
+            modal.classList.add('show');
 
-            setTimeout(() => {
-                statusEl.classList.remove('show');
-            }, type === 'error' ? 5000 : 3000);
+            // Auto-close for non-error messages
+            if (type !== 'error') {
+                setTimeout(() => {
+                    modal.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('messageModal').classList.remove('show');
         }
 
         function escapeHtml(text) {
@@ -1052,5 +1313,20 @@ Return ONLY the post text, nothing else. No markdown, no quotes.`;
             return div.innerHTML;
         }
     </script>
+
+    <!-- Modal -->
+    <div id="messageModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-icon" id="modalIcon">ℹ️</span>
+                <span class="modal-title" id="modalTitle">Message</span>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-message" id="modalMessage"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-primary" onclick="closeModal()">OK</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
