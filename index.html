@@ -873,6 +873,13 @@
             const topic = document.getElementById('topic').value.trim();
             const tone = document.getElementById('tone').value;
 
+            // Clear any previous error messages
+            const previewContainer = document.getElementById('previewContainer');
+            const statusEl = previewContainer.querySelector('.status-message');
+            if (statusEl) {
+                statusEl.classList.remove('show');
+            }
+
             // Validation
             if (!apiKey) {
                 showMessage('Please enter your API key', 'error');
@@ -1034,11 +1041,9 @@ Return ONLY the post text, nothing else. No markdown, no quotes.`;
             statusEl.textContent = message;
             statusEl.className = `status-message show ${type}`;
 
-            if (type !== 'error') {
-                setTimeout(() => {
-                    statusEl.classList.remove('show');
-                }, 3000);
-            }
+            setTimeout(() => {
+                statusEl.classList.remove('show');
+            }, type === 'error' ? 5000 : 3000);
         }
 
         function escapeHtml(text) {
