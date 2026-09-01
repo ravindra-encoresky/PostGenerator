@@ -1,65 +1,48 @@
-# Social Post Generator
+# LinkedIn Post Helper
 
-Generate LinkedIn and Instagram posts instantly using your own AI API key. No backend, no data collection — everything runs in your browser.
+AI-powered LinkedIn content generator using Google Gemini. Fast, private, no backend required.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
 
-- 🤖 **Multi-API Support**: Google Gemini, OpenAI, or Hugging Face
-- 📱 **Platform-Specific**: Auto-formats content for LinkedIn and Instagram
-- 🎨 **Live Preview**: See how your posts will look before sharing
-- 💾 **Export Options**: Copy to clipboard or download as text
-- 🌙 **Dark Mode**: Built-in theme toggle
-- 🔒 **Privacy First**: API keys never leave your browser
+- 🤖 AI-powered with Google Gemini
+- 📚 9 content categories with 30+ templates
+- 📝 LinkedIn-optimized posts with character count
+- 🎨 Image prompts for Midjourney/DALL-E
+- 💾 Copy or download posts
+- 🌙 Dark mode
+- 🔒 100% private (API key stays in your browser)
 
 ## Quick Start
 
-1. Get a free API key from one of these services:
-   - [Google Gemini](https://makersuite.google.com/app/apikey) (Free tier available)
-   - [OpenAI](https://platform.openai.com/api-keys) (Free trial credits)
-   - [Hugging Face](https://huggingface.co/settings/tokens) (Free tier)
-
+1. Get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 2. Open `index.html` in your browser
-
-3. Paste your API key, describe your content idea, and generate!
-
-## Supported Platforms
-
-- **LinkedIn**: Professional, inspiring tone (3000 char limit)
-- **Instagram**: Casual, creative tone (2200 char limit)
-
-## Tone Options
-
-- Professional & Inspiring
-- Casual & Friendly
-- Humorous & Witty
-- Motivational & Energetic
-- Educational & Informative
-
-## Privacy
-
-Your API key is only used in your browser and never transmitted to any server (except to your chosen AI provider's API). No data is stored or logged.
-
-## Deploy to GitHub Pages
-
-1. Go to repository Settings → Pages
-2. Select `main` branch as source
-3. Your site will be live at `https://yourusername.github.io/PostGenerator`
+3. Paste your API key and start generating posts
 
 ## How It Works
 
-The generator:
-1. Takes your input (topic + tone)
-2. Creates platform-specific prompts for LinkedIn and Instagram
-3. Sends them to your chosen AI API via your key
-4. Formats the results with character counts and export options
+1. Choose a content category or write your own topic
+2. Pick a tone (Professional, Casual, Humorous, etc.)
+3. Click "Generate Post"
+4. Get your LinkedIn post + image prompt
 
-## Contributing
+## Content Categories
 
-Feel free to fork, modify, and improve! Common enhancements:
-- Add more tone options
-- Support for more platforms (TikTok, Twitter, etc.)
-- Image generation integration
-- Post scheduling features
+- Professional Growth
+- Industry Insights
+- Leadership & Culture
+- Personal Development
+- Business & Entrepreneurship
+- Success Stories
+- Thought Leadership
+- Community & Impact
+- Learning & Education
+- Technical & Development
+
+## Privacy
+
+Your API key only runs in your browser. No backend, no logging, no data collection.
 
 ## License
 
