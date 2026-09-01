@@ -2,6 +2,8 @@
 
 AI-powered LinkedIn content generator using Google Gemini. Fast, private, no backend required.
 
+**[🚀 Try it live](https://ravindra-encoresky.github.io/PostGenerator/)**
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
