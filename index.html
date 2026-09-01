@@ -517,6 +517,47 @@
         .instructions strong {
             color: var(--text-primary);
         }
+
+        /* Trending Grid */
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .trending-tag {
+            padding: 10px 12px;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .trending-tag:hover {
+            border-color: var(--primary);
+            background: var(--bg-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .trending-tag.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .trending-icon {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
@@ -570,8 +611,10 @@
                     <div class="card-title">Content</div>
 
                     <div class="form-group">
-                        <label for="topic">Topic or Idea</label>
-                        <textarea id="topic" placeholder="What do you want to post about? e.g., 'Just launched my new SaaS product', 'Tips for remote work', 'Celebrating 1 year anniversary'"></textarea>
+                        <label>Trending Topics</label>
+                        <div class="trending-grid" id="trendingGrid"></div>
+                        <p style="font-size: 12px; color: var(--text-tertiary); margin-top: 12px; margin-bottom: 12px;">Or write your own:</p>
+                        <textarea id="topic" placeholder="Enter your custom topic or idea..."></textarea>
                     </div>
 
                     <div class="form-group">
@@ -639,10 +682,56 @@
 
         updateThemeIcon();
 
+        // Trending Topics
+        const trendingTopics = [
+            { icon: '🚀', text: 'Launched new product' },
+            { icon: '💡', text: 'AI & automation tips' },
+            { icon: '🎯', text: 'Productivity hacks' },
+            { icon: '💼', text: 'Career milestone' },
+            { icon: '🧠', text: 'Personal growth' },
+            { icon: '🔥', text: 'Industry insights' },
+            { icon: '📊', text: 'Data & metrics' },
+            { icon: '🌟', text: 'Success story' },
+            { icon: '🤝', text: 'Team collaboration' },
+            { icon: '🎓', text: 'Lessons learned' },
+            { icon: '💰', text: 'Business growth' },
+            { icon: '🌍', text: 'Global trends' }
+        ];
+
         // State Management
         let selectedApi = 'gemini';
         let selectedPlatforms = { linkedin: true, instagram: true };
         let generatedPosts = {};
+
+        // Initialize trending topics
+        function initTrendingTopics() {
+            const grid = document.getElementById('trendingGrid');
+            trendingTopics.forEach((topic, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'trending-tag';
+                tag.innerHTML = `<span class="trending-icon">${topic.icon}</span>${topic.text}`;
+                tag.addEventListener('click', () => selectTrending(topic.text, tag));
+                grid.appendChild(tag);
+            });
+        }
+
+        function selectTrending(text, element) {
+            const topicInput = document.getElementById('topic');
+            topicInput.value = text;
+
+            // Update visual state
+            document.querySelectorAll('.trending-tag').forEach(tag => tag.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // Clear trending selection when user types custom content
+        const topicInput = document.getElementById('topic');
+        topicInput.addEventListener('input', () => {
+            document.querySelectorAll('.trending-tag').forEach(tag => tag.classList.remove('selected'));
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initTrendingTopics);
 
         // API Tab Selection
         document.querySelectorAll('.api-tab').forEach(tab => {
