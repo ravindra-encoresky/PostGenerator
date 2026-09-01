@@ -545,7 +545,7 @@
         /* Trending Grid */
         .trending-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 8px;
             margin-bottom: 16px;
         }
@@ -562,6 +562,12 @@
             transition: all 0.2s;
             color: var(--text-primary);
             line-height: 1.4;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .trending-tag:hover {
