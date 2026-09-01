@@ -257,6 +257,30 @@
             color: white;
             border-radius: 3px;
             margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        .api-link {
+            display: inline-block;
+            font-size: 11px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-top: 4px;
+        }
+
+        .api-link:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+
+        .api-tab.active .api-link {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .api-tab.active .api-link:hover {
+            color: white;
         }
 
         /* Button */
@@ -585,14 +609,17 @@
                         <div class="api-tab active" data-api="gemini">
                             <div>🔵 Google Gemini</div>
                             <div class="api-badge">FREE</div>
+                            <a href="https://makersuite.google.com/app/apikey" target="_blank" class="api-link">Get Key →</a>
                         </div>
                         <div class="api-tab" data-api="openai">
                             <div>🟢 OpenAI</div>
                             <div class="api-badge">CREDITS</div>
+                            <a href="https://platform.openai.com/api-keys" target="_blank" class="api-link">Get Key →</a>
                         </div>
                         <div class="api-tab" data-api="huggingface">
                             <div>🤗 Hugging Face</div>
                             <div class="api-badge">FREE</div>
+                            <a href="https://huggingface.co/settings/tokens" target="_blank" class="api-link">Get Key →</a>
                         </div>
                     </div>
 
@@ -602,6 +629,23 @@
                         <input type="password" id="apiKey" placeholder="Paste your API key here (not stored)" />
                         <div class="instructions">
                             <strong>Not stored:</strong> Your API key is only used in your browser for this session and never sent to our servers.
+                        </div>
+                    </div>
+
+                    <!-- API Guide -->
+                    <div style="margin-top: 16px; padding: 12px; background: rgba(124, 58, 237, 0.08); border-radius: 6px; font-size: 12px; line-height: 1.6; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); display: block; margin-bottom: 8px;">Quick Start Guide:</strong>
+                        <div style="margin-bottom: 8px;">
+                            <strong>🔵 Google Gemini (Recommended)</strong><br>
+                            Free tier: 60 requests/min. <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: var(--primary); text-decoration: none;">Get free key here</a>
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <strong>🟢 OpenAI</strong><br>
+                            Free trial $5 credits. <a href="https://platform.openai.com/api-keys" target="_blank" style="color: var(--primary); text-decoration: none;">Get key here</a>
+                        </div>
+                        <div>
+                            <strong>🤗 Hugging Face</strong><br>
+                            Free tier available. <a href="https://huggingface.co/settings/tokens" target="_blank" style="color: var(--primary); text-decoration: none;">Get key here</a>
                         </div>
                     </div>
                 </div>
